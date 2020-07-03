@@ -52,6 +52,8 @@ if %ERRORLEVEL% == 0 (
   set CurrPath=!CurrPath!C:\tools\flutter\bin
   setx Path "!CurrPath!" /M
   path !Path!;C:\tools\flutter\bin
+  echo 3.3 Flutter のチャンネルチェック
+  call flutter channel -v
   echo 3.4 Flutter の準備ができました
 )
 timeout /t 3 /nobreak
@@ -63,18 +65,18 @@ flutter channel | find "* stable" >NUL
 if %ERRORLEVEL% == 0 (
   echo 4.1 Flutter は stable チャンネルに設定されています
   echo 4.2 Flutter を beta チャンネルに移行します
-  flutter channel beta
+  call flutter channel -v beta
   echo 4.3 Flutter のWebドライバーを有効にします
-  flutter config --enable-web
+  call flutter config -v --enable-web
   echo 4.4 Flutter を最新状態に更新します
-  flutter upgrade
+  call flutter upgrade -v
   echo 4.5 Flutter が最新状態になりました
 ) else (
   echo 4.1 Flutter は 開発版チャンネルに設定されています
   echo 4.2 Flutter のWebドライバーを有効にします
-  flutter config --enable-web
+  call flutter config --enable-web
   echo 4.3 Flutter を最新状態に更新します
-  flutter upgrade
+  call flutter upgrade
   echo 4.4 Flutter が最新状態になりました
 )
 timeout /t 3 /nobreak
@@ -82,7 +84,7 @@ echo;
 
 
 echo 5. Flutter の設定状況を確認します
-flutter doctor
+call flutter doctor
 timeout /t 3 /nobreak
 echo;
 
